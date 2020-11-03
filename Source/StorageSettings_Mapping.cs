@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using RimWorld;
+using Multiplayer.API;
 
 namespace SatisfiedStorage
 {
@@ -23,6 +24,8 @@ namespace SatisfiedStorage
             return result;
         }
 
+        // StorageSettings_Mapping.Set(settings, storageSettings_Hysteresis);
+        [SyncMethod]
         public static void Set(StorageSettings storage, StorageSettings_Hysteresis value)
         {
             bool flag = mapping.ContainsKey(storage);
@@ -34,6 +37,14 @@ namespace SatisfiedStorage
             {
                 mapping.Add(storage, value);
             }
+        }
+
+        // MP API must already have a SyncWorker for handling RimWorld core type: `StorageSettings`
+        // so only add marshalling function to handle StorageSettings_Hysteresis type
+        [SyncWorker(shouldConstruct = true)]
+        static void SyncStorageSettings_Hysteresis(SyncWorker sync, ref StorageSettings_Hysteresis type)
+        {
+            sync.Bind(ref type.FillPercent);
         }
     }
 }
