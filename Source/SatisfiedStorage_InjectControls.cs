@@ -41,7 +41,8 @@ namespace SatisfiedStorage
 
             StorageSettings_Hysteresis storageSettings_Hysteresis = StorageSettings_Mapping.Get(settings) ?? new StorageSettings_Hysteresis();
 
-            float percent = Widgets.HorizontalSlider(rect.LeftPart(0.8f), storageSettings_Hysteresis.FillPercent, 0f, 100f, false, "Refill cells less than");
+            // round to nearest whole number float
+            float percent = Widgets.HorizontalSlider(rect.LeftPart(0.8f), storageSettings_Hysteresis.FillPercent, 0f, 100f, false, "Refill cells less than", null, null, 1f);
             Widgets.Label(rect.RightPart(0.2f), percent.ToString("N0") + "%");
 
             // only update settings on change to prevent excessive multiplayer syncs

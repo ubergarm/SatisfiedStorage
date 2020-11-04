@@ -24,7 +24,6 @@ namespace SatisfiedStorage
             return result;
         }
 
-        // StorageSettings_Mapping.Set(settings, storageSettings_Hysteresis);
         [SyncMethod]
         public static void Set(StorageSettings storage, StorageSettings_Hysteresis value)
         {
